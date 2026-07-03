@@ -1,0 +1,63 @@
+@baseUrl = http://localhost:3000
+
+### Listar todos os usuários
+GET {{baseUrl}}/users
+
+### Buscar usuário por ID
+GET {{baseUrl}}/users/1
+
+### Criar usuário
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "email": "pedro@example.com",
+  "username": "pedro",
+  "password": "123456"
+}
+
+### Criar usuário com e-mail duplicado (deve retornar 400)
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "email": "pedro@example.com",
+  "username": "pedro2",
+  "password": "123456"
+}
+
+### Criar usuário com username duplicado (deve retornar 400)
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "email": "outro@example.com",
+  "username": "pedro",
+  "password": "123456"
+}
+
+### Criar usuário sem senha (deve retornar 422)
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "email": "semSenha@example.com",
+  "username": "semsenha"
+}
+
+### Atualizar usuário
+PATCH {{baseUrl}}/users/1
+Content-Type: application/json
+
+{
+  "username": "pedro_atualizado"
+}
+
+### Buscar usuário inexistente (deve retornar 404)
+GET {{baseUrl}}/users/9999
+
+### Deletar usuário
+DELETE {{baseUrl}}/users/1
+
+### Deletar usuário inexistente (deve retornar 404)
+DELETE {{baseUrl}}/users/9999

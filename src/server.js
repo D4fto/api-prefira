@@ -1,6 +1,7 @@
 import Fastify from 'fastify'
 import cors from '@fastify/cors'
 import { errorHandler } from "./shared/http/error-handler.js";
+import userRoutes from './features/user/user.routes.js'
 import pool from './database/pool.js'
 
 const server = Fastify()
@@ -18,6 +19,8 @@ server.setNotFoundHandler((request, reply) => {
     message: 'O recurso solicitado não existe nesta API.'
   })
 })
+
+server.register(userRoutes)
 
 const PORT = 3000
 
