@@ -61,3 +61,30 @@ DELETE {{baseUrl}}/users/1
 
 ### Deletar usuário inexistente (deve retornar 404)
 DELETE {{baseUrl}}/users/9999
+
+### Login com sucesso
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+  "email": "pedro@example.com",
+  "password": "123456"
+}
+
+### Login com senha errada (deve retornar 401)
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+  "email": "pedro@example.com",
+  "password": "senhaErrada"
+}
+
+### Login com e-mail inexistente (deve retornar 401)
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+  "email": "naoexiste@example.com",
+  "password": "123456"
+}
