@@ -1,5 +1,7 @@
 import Fastify from 'fastify'
 import cors from '@fastify/cors'
+import { errorHandler } from "./shared/http/error-handler.js";
+
 
 const server = Fastify()
 
@@ -8,6 +10,14 @@ server.register(cors, {
   methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS']
 })
 
+server.setErrorHandler(errorHandler);
+
+server.setNotFoundHandler((request, reply) => {
+  reply.code(404).send({
+    status: 'error',
+    message: 'O recurso solicitado não existe nesta API.'
+  })
+})
 
 const PORT = 3000
 
