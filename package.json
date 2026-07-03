@@ -1,0 +1,27 @@
+{
+  "name": "api-prefira",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/D4fto/api-prefira#readme",
+  "bugs": {
+    "url": "https://github.com/D4fto/api-prefira/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/D4fto/api-prefira.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node --env-file=.env --watch src/server.js",
+    "start": "node --env-file=.env src/server.js"
+  },
+  "dependencies": {
+    "@fastify/cors": "^11.2.0",
+    "fastify": "^5.9.0",
+    "nodemon": "^3.1.14",
+    "pg": "^8.22.0"
+  }
+}
