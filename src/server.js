@@ -3,6 +3,7 @@ import cors from '@fastify/cors'
 import { errorHandler } from "./shared/http/error-handler.js";
 import userRoutes from './features/user/user.routes.js'
 import authRoutes from './features/auth/auth.routes.js'
+import questionCategoryRoutes from './features/question-category/question-category.routes.js'
 import pool from './database/pool.js'
 
 const server = Fastify()
@@ -23,6 +24,7 @@ server.setNotFoundHandler((request, reply) => {
 
 server.register(userRoutes)
 server.register(authRoutes)
+server.register(questionCategoryRoutes)
 
 const PORT = 3000
 
