@@ -88,3 +88,43 @@ Content-Type: application/json
   "email": "naoexiste@example.com",
   "password": "123456"
 }
+
+
+### Listar categorias
+GET {{baseUrl}}/question-categories
+
+### Buscar categoria por ID
+GET {{baseUrl}}/question-categories/1
+
+### Criar categoria
+POST {{baseUrl}}/question-categories
+Content-Type: application/json
+
+{
+  "name": "Comida"
+}
+
+### Criar categoria com nome duplicado (deve retornar 400)
+POST {{baseUrl}}/question-categories
+Content-Type: application/json
+
+{
+  "name": "Comida"
+}
+
+### Atualizar categoria
+PATCH {{baseUrl}}/question-categories/1
+Content-Type: application/json
+
+{
+  "name": "Comida e Bebida"
+}
+
+### Buscar categoria inexistente (deve retornar 404)
+GET {{baseUrl}}/question-categories/9999
+
+### Deletar categoria sem perguntas vinculadas
+DELETE {{baseUrl}}/question-categories/1
+
+### Deletar categoria com perguntas vinculadas (deve retornar 400)
+DELETE {{baseUrl}}/question-categories/2
