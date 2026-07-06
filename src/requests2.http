@@ -30,7 +30,7 @@ Authorization: Bearer {{token}}
 }
 
 ### Deletar questão
-DELETE {{baseUrl}}/questions/2
+DELETE {{baseUrl}}/questions/5
 Authorization: Bearer {{token}}
 
 ### Responder uma questão (Interação)
@@ -39,7 +39,7 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "question_id": 3,
+  "question_id": 6,
   "option": 1,
   "review": true
 }
@@ -50,7 +50,7 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "question_id": 3,
+  "question_id": 6,
   "option": 2,
   "review": false
 }
@@ -67,5 +67,5 @@ Authorization: Bearer {{token}}
 }
 
 ### Tentar deletar uma questão que já foi respondida (deve retornar 403)
-DELETE {{baseUrl}}/questions/3
+DELETE {{baseUrl}}/questions/6
 Authorization: Bearer {{token}}
