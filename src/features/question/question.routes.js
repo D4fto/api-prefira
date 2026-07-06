@@ -1,3 +1,4 @@
+// @file: src/features/question/question.routes.js
 import { QuestionRepository } from './question.repository.js';
 import { QuestionService } from './question.service.js';
 import { QuestionController } from './question.controller.js';
@@ -5,12 +6,10 @@ import pool from '../../database/pool.js';
 import { authGuard } from '../../shared/http/auth-guard.js';
 
 export default async function questionRoutes(server) {
-  // Injeção de Dependência
   const repository = new QuestionRepository(pool);
   const service = new QuestionService(repository);
   const controller = new QuestionController(service);
 
-  // Schema do Swagger para a rota POST
   const createSchema = {
     schema: {
       tags: ['Questions'],
@@ -21,9 +20,9 @@ export default async function questionRoutes(server) {
         required: ['option1', 'option2', 'question_category_id'],
         properties: {
           option1: { type: 'string' },
-          option1_choices: { type: 'string' },
+          option1_choices: { type: 'integer' }, // <-- Mudado para integer
           option2: { type: 'string' },
-          option2_choices: { type: 'string' },
+          option2_choices: { type: 'integer' }, // <-- Mudado para integer
           question_category_id: { type: 'integer' }
         }
       },
@@ -32,16 +31,16 @@ export default async function questionRoutes(server) {
         400: { type: 'object', properties: { status: { type: 'string' }, message: { type: 'string' } } }
       }
     },
-    preHandler: authGuard // Protege a rota
+    preHandler: authGuard
   };
 
-  server.post('/', createSchema, controller.create.bind(controller));
+  server.post('/questions', createSchema, controller.create.bind(controller));
   
-  server.get('/', {
+  server.get('/questions', {
     schema: { tags: ['Questions'], summary: 'Lista todas as questões enriquecidas' }
   }, controller.findAll.bind(controller));
 
-  server.delete('/:id', {
+  server.delete('/questions/:id', {
     schema: {
       tags: ['Questions'], summary: 'Deleta uma questão', security: [{ bearerAuth: [] }],
       params: { type: 'object', properties: { id: { type: 'integer' } } }

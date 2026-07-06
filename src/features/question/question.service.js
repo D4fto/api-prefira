@@ -1,5 +1,9 @@
-import { AppError } from '../../shared/errors/app-error.js';
-import { QuestionErrors } from './question.errors.js';
+// @file: src/features/question/question.service.js
+import { 
+  QuestionNotFoundError, 
+  CategoryRequiredError, 
+  CannotDeleteWithInteractionsError 
+} from './question.errors.js';
 
 export class QuestionService {
   constructor(repository) {
@@ -8,7 +12,7 @@ export class QuestionService {
 
   async createQuestion(data) {
     if (!data.question_category_id) {
-      throw new AppError(QuestionErrors.CATEGORY_REQUIRED, 400);
+      throw new CategoryRequiredError();
     }
     const questionId = await this.repository.create(data);
     return { id: questionId, message: 'Questão criada com sucesso!' };
@@ -21,13 +25,13 @@ export class QuestionService {
   async deleteQuestion(id) {
     const questionExists = await this.repository.findById(id);
     if (!questionExists) {
-      throw new AppError(QuestionErrors.NOT_FOUND, 404);
+      throw new QuestionNotFoundError();
     }
 
     // Regra de Negócio: Não pode deletar questão que já foi respondida
     const hasInteractions = await this.repository.hasInteractions(id);
     if (hasInteractions) {
-      throw new AppError(QuestionErrors.CANNOT_DELETE_WITH_INTERACTIONS, 403);
+      throw new CannotDeleteWithInteractionsError();
     }
 
     await this.repository.delete(id);
