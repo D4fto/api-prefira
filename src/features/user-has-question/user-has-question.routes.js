@@ -1,3 +1,4 @@
+// @file: src/features/user-has-question/user-has-question.routes.js
 import { UserHasQuestionRepository } from './user-has-question.repository.js';
 import { UserHasQuestionService } from './user-has-question.service.js';
 import { UserHasQuestionController } from './user-has-question.controller.js';
@@ -19,7 +20,7 @@ export default async function userHasQuestionRoutes(server) {
         required: ['question_id', 'option', 'review'],
         properties: {
           question_id: { type: 'integer' },
-          option: { type: 'integer' }, // Assumindo que option guarda 1 ou 2
+          option: { type: 'integer' },
           review: { type: 'boolean' }
         }
       }
@@ -27,5 +28,6 @@ export default async function userHasQuestionRoutes(server) {
     preHandler: authGuard
   };
 
-  server.post('/', createSchema, controller.create.bind(controller));
+  // Caminho atualizado para incluir /interactions
+  server.post('/interactions', createSchema, controller.create.bind(controller));
 }
