@@ -1,4 +1,4 @@
-// src/shared/http/error-handler.js
+// @file: src/shared/http/error-handler.js
 import { AppError } from "../errors/app-error.js";
 
 export function errorHandler(error, request, reply) {
@@ -9,7 +9,8 @@ export function errorHandler(error, request, reply) {
     });
   }
 
-  request.log.error(error);
+  // Esta linha vai imprimir o erro exato da base de dados no seu terminal!
+  console.error("ERRO INTERNO DETETADO:", error);
 
   return reply.status(500).send({
     status: "error",

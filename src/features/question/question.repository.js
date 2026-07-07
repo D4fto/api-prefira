@@ -37,10 +37,10 @@ export class QuestionRepository {
       return questionId;
       
     } catch (error) {
-      await client.query('ROLLBACK');
+      await client.query('ROLLBACK'); // Se algo der errado, desfaz tudo
       throw error;
     } finally {
-      client.release();
+      client.release(); // Libera a conexão de volta para o Pool
     }
   }
 

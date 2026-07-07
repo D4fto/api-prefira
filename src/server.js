@@ -57,11 +57,11 @@ server.setNotFoundHandler((request, reply) => {
 })
 
 // Registro das Rotas
-server.register(userRoutes, { prefix: '/users' })
-server.register(authRoutes, { prefix: '/auth' })
-server.register(questionCategoryRoutes, { prefix: '/categories' })
-server.register(questionRoutes, { prefix: '/questions' })
-server.register(userHasQuestionRoutes, { prefix: '/interactions' })
+server.register(userRoutes)
+server.register(authRoutes)
+server.register(questionCategoryRoutes)
+server.register(questionRoutes)
+server.register(userHasQuestionRoutes)
 
 const PORT = 3000
 

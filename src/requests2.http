@@ -1,0 +1,71 @@
+@baseUrl = http://localhost:3000
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsInVzZXJuYW1lIjoicGVkcm8iLCJpYXQiOjE3ODMzMDAwNzEsImV4cCI6MTc4MzM4NjQ3MX0.05-60bqmT6MuaDSpwvf_j1CMtioSJ-3YVwyhupik3zs
+
+### Listar todas as questões (trazendo dados da categoria e estatísticas)
+GET {{baseUrl}}/questions
+
+### Criar uma nova questão
+POST {{baseUrl}}/questions
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "option1": "Pizza",
+  "option1_choices": 1,
+  "option2": "Hambúrguer",
+  "option2_choices": 2,
+  "question_category_id": 1
+}
+
+### Criar questão sem categoria (deve retornar 400)
+POST {{baseUrl}}/questions
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "option1": "Café",
+  "option1_choices": 1,
+  "option2": "Chá",
+  "option2_choices": 2
+}
+
+### Deletar questão
+DELETE {{baseUrl}}/questions/5
+Authorization: Bearer {{token}}
+
+### Responder uma questão (Interação)
+POST {{baseUrl}}/interactions
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "question_id": 6,
+  "option": 1,
+  "review": true
+}
+
+### Tentar responder a mesma questão novamente (deve retornar 400)
+POST {{baseUrl}}/interactions
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "question_id": 6,
+  "option": 2,
+  "review": false
+}
+
+### Tentar responder uma questão que não existe (deve retornar 404)
+POST {{baseUrl}}/interactions
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "question_id": 9999,
+  "option": 1,
+  "review": true
+}
+
+### Tentar deletar uma questão que já foi respondida (deve retornar 403)
+DELETE {{baseUrl}}/questions/6
+Authorization: Bearer {{token}}
