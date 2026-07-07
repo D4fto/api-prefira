@@ -8,9 +8,8 @@ export class QuestionRepository {
     const client = await this.pool.connect();
     
     try {
-      await client.query('BEGIN'); // Inicia a transação
+      await client.query('BEGIN');
 
-      // 1. Cria a questão
       const questionQuery = `
         INSERT INTO question (option1, option1_choices, option2, option2_choices, question_category_id)
         VALUES ($1, $2, $3, $4, $5)
@@ -27,8 +26,6 @@ export class QuestionRepository {
       const result = await client.query(questionQuery, questionValues);
       const questionId = result.rows[0].id;
 
-      // 2. Cria as estatísticas zeradas
-      // AQUI ESTÁ A CORREÇÃO QUE DEVE TER SE PERDIDO: OVERRIDING SYSTEM VALUE
       const statsQuery = `
         INSERT INTO question_statistics (question_id)
         OVERRIDING SYSTEM VALUE
@@ -36,7 +33,7 @@ export class QuestionRepository {
       `;
       await client.query(statsQuery, [questionId]);
 
-      await client.query('COMMIT'); // Salva tudo
+      await client.query('COMMIT');
       return questionId;
       
     } catch (error) {

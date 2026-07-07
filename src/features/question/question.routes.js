@@ -20,9 +20,9 @@ export default async function questionRoutes(server) {
         required: ['option1', 'option2', 'question_category_id'],
         properties: {
           option1: { type: 'string' },
-          option1_choices: { type: 'integer' }, // Validando como número para o seu banco
+          option1_choices: { type: 'integer' }, // <-- Mudado para integer
           option2: { type: 'string' },
-          option2_choices: { type: 'integer' }, // Validando como número para o seu banco
+          option2_choices: { type: 'integer' }, // <-- Mudado para integer
           question_category_id: { type: 'integer' }
         }
       },
@@ -34,17 +34,12 @@ export default async function questionRoutes(server) {
     preHandler: authGuard
   };
 
-  // --- AS 3 ROTAS PRECISAM ESTAR AQUI ---
-
-  // 1. ROTA DE CRIAR
   server.post('/questions', createSchema, controller.create.bind(controller));
   
-  // 2. ROTA DE LISTAR
   server.get('/questions', {
     schema: { tags: ['Questions'], summary: 'Lista todas as questões enriquecidas' }
   }, controller.findAll.bind(controller));
 
-  // 3. ROTA DE DELETAR
   server.delete('/questions/:id', {
     schema: {
       tags: ['Questions'], summary: 'Deleta uma questão', security: [{ bearerAuth: [] }],
