@@ -13,7 +13,14 @@ export class QuestionController {
     const questions = await this.service.getAllQuestions();
     return reply.status(200).send(questions);
   }
-
+  
+  async update(request, reply) {
+    const { id } = request.params;
+    const data = request.body;
+    const result = await this.service.updateQuestion(id, data);
+    return reply.status(200).send(result);
+  }
+  
   async delete(request, reply) {
     const { id } = request.params;
     await this.service.deleteQuestion(id);

@@ -44,6 +44,33 @@ export class QuestionRepository {
     }
   }
 
+  async update(id, data) {
+    const query = `
+      UPDATE question
+      SET
+        option1 = $1,
+        option1_choices = $2,
+        option2 = $3,
+        option2_choices = $4,
+        question_category_id = $5
+      WHERE id = $6
+      RETURNING *
+    `;
+
+    const values = [
+      data.option1,
+      data.option1_choices,
+      data.option2,
+      data.option2_choices,
+      data.question_category_id,
+      id
+    ];
+
+    const result = await this.pool.query(query, values);
+
+    return result.rows[0];
+  }
+
   async findAll() {
     const query = `
       SELECT 
