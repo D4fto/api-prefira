@@ -18,6 +18,14 @@ export class QuestionService {
     return { id: questionId, message: 'Questão criada com sucesso!' };
   }
 
+  async updateQuestion(id, data) {
+    if (!data.question_category_id) {
+      throw new CategoryRequiredError();
+    }
+    const questionId = await this.repository.update(id, data);
+    return { id: questionId, message: 'Questão atualizada com sucesso!' };
+  }
+
   async getAllQuestions() {
     return await this.repository.findAll();
   }

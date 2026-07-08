@@ -35,7 +35,9 @@ export default async function questionRoutes(server) {
   };
 
   server.post('/questions', createSchema, controller.create.bind(controller));
-  
+
+  server.patch('/questions/:id', createSchema, controller.update.bind(controller));
+
   server.get('/questions', {
     schema: { tags: ['Questions'], summary: 'Lista todas as questões enriquecidas' }
   }, controller.findAll.bind(controller));
